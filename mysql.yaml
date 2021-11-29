@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-mysql-svc
+  labels:
+    app: webapp
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    app: webapp
+    tier: mysql
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv
+  labels:
+    type: local
+spec:
+  storageClassName: mysqldata
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/host_mnt/mysql-data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  labels:
+    app: webapp
+spec:
+  storageClassName: mysqldata
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-mysql
+  labels:
+    app: webapp
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: webapp
+        tier: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: joanrgg/mysql-br
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+              
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim

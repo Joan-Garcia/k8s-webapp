@@ -1,0 +1,20 @@
+{
+    "name": "joang/bienesraices",
+    "description": "Proyecto con POO",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Joan Roberto Garcia Garcia",
+            "email": "joangarcia2015@gmail.com"
+        }
+    ],
+    "require": {
+        "intervention/image": "^2.7",
+        "vlucas/phpdotenv": "^5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "./classes"
+        }
+    }
+}
