@@ -1,3 +1,4 @@
+# App Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -17,19 +18,20 @@ spec:
         tier: frontend
     spec:
       containers:
-      - name: php-apache
-        image: joanrgg/webapp:v3
-        imagePullPolicy: Always
-        env:
-        - name: DB_HOST
-          value: webapp-mysql-svc
-        - name: DB_USER
-          value: "root"
-        - name: DB_PASS
-          value: "root"
-        - name: DB_NAME
-          value: "bienes_raices"
+        - name: php-apache
+          image: joanrgg/webapp:v3
+          imagePullPolicy: Always
+          env:
+          - name: DB_HOST
+            value: webapp-mysql-svc
+          - name: DB_USER
+            value: "root"
+          - name: DB_PASS
+            value: "root"
+          - name: DB_NAME
+            value: "bienes_raices"
 ---
+# App Service
 apiVersion: v1
 kind: Service
 metadata:

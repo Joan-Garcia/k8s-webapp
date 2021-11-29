@@ -1,8 +1,11 @@
 Run namespace.yaml
-kubectl apply -f .\namespace.yaml
+kubectl apply -f namespace.yaml
 
 Run mysql.yaml
-kubectl apply -f .\mysql.yaml --namespace=jgarcia
+kubectl apply -f mysql.yaml --namespace=jgarcia
 
 Run app.yaml
-kubectl apply -f .\app.yaml --namespace=jgarcia
+kubectl apply -f app.yaml --namespace=jgarcia
+
+Run ingress.yaml
+kubectl apply -f ingress.yaml -n jgarcia
