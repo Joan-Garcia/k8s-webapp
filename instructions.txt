@@ -8,4 +8,4 @@ Run app.yaml
 kubectl apply -f app.yaml --namespace=jgarcia
 
 Run ingress.yaml
-kubectl apply -f ingress.yaml -n jgarcia
+kubectl apply -f ingress.yaml --namespace=jgarcia
